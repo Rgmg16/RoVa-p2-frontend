@@ -6,7 +6,7 @@ import Nav from './Components/Nav';
 
 function App() {
   return (
-    <div className="App min-h-screen flex flex-col overflow-auto">
+    <div className="App min-h-screen flex flex-col">
       <Nav />
       <Footer />
 
