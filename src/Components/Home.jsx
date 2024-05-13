@@ -20,9 +20,9 @@ function Home() {
       <p>Below are sample services that can be provided by volunteers. Feel free to suggest some more</p>
 
       <div className="d-flex justify-content-center align-items-center h-100">
-        <div className="row">
+        <div className="row gx-4">
           <div className="col">
-            <Card className="mx-auto" style={{ width: '18rem', height: '25rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
+            <Card className="mx-auto mb-4" style={{ width: '18rem', height: '25rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
               <Card.Img variant="top" src={Jobapplication} />
               <Card.Body>
                 <Card.Title><u>Job application</u></Card.Title>
