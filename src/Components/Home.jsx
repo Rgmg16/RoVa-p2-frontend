@@ -2,7 +2,7 @@ import React from 'react'
 import RoVabannergif from './RoVa banner gif.gif'
 import Card from 'react-bootstrap/Card';
 import Jobapplication from './Job application.png'
-import Translation from './Translation.png'
+import Translation from './Translation-2.png'
 function Home() {
   return (
     <div>
@@ -22,7 +22,7 @@ function Home() {
       <div className="d-flex justify-content-center align-items-center h-100">
         <div className="row gx-4">
           <div className="col">
-            <Card className="mx-auto mb-4" style={{ width: '18rem', height: '25rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
+            <Card className="mx-auto mb-4" style={{ width: '18rem', height: '26rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
               <Card.Img variant="top" src={Jobapplication} />
               <Card.Body>
                 <Card.Title><u>Job application</u></Card.Title>
@@ -33,7 +33,7 @@ function Home() {
             </Card>
           </div>
           <div className="col">
-            <Card className="mx-auto" style={{ width: '18rem', height: '34rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
+            <Card className="mx-auto" style={{ width: '18rem', height: '26rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
               <Card.Img variant="top" src={Translation} className="img-fluid" />
               <Card.Body>
                 <Card.Title><u>Translation</u></Card.Title>
