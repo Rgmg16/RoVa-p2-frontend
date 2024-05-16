@@ -76,7 +76,7 @@ function Application() {
 
   return (
     <div className="max-w-md mx-auto p-6 rounded-lg mt-8" style={{ backgroundColor: 'cyan', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
-      <h1 className="text-green-400 text-3xl font-bold mb-4 underline">Apply Here!</h1>
+      <h1 className="text-green-400 text-3xl font-bold mb-4 underline">Apply Here to become a RoVa-neer volunteeer!</h1>
       <Form onSubmit={handleSubmit}>
 
         <FloatingLabel controlId="fullName" label="Full Name:" className="mb-3 text-green-500">
