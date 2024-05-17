@@ -3,10 +3,11 @@ import RoVabannergif from './RoVa banner gif.gif'
 import Card from 'react-bootstrap/Card';
 import Jobapplication from './Job application.png'
 import Translation from './Translation-2.png'
+import PublicRelations from './pr.jpg'
+
 function Home() {
   return (
     <div>
-
       <img src={RoVabannergif} alt="RoVa banner GIF" className=" w-full h-auto" />
       <h1><u>What is RoVa?</u></h1>
       <p>RoVa is a world where the deaf community comes together to support one another by viewing and discussing each other's complaints , providing solutions and giving updates on the current trends in the deaf community .
@@ -17,7 +18,7 @@ function Home() {
       <h2><u>Vision</u></h2>
       <p>Equality and justice to the deaf culture and community.</p>
       <h2><u>Services offered by volunteers</u></h2>
-      <p>Below are sample services that can be provided by volunteers. Feel free to suggest some more</p>
+      <p>Below are sample services that can be provided by volunteers. Feel free to suggest some more.</p>
 
       <div className="d-flex justify-content-center align-items-center h-100">
         <div className="row gx-4">
@@ -33,7 +34,7 @@ function Home() {
             </Card>
           </div>
           <div className="col">
-            <Card className="mx-auto" style={{ width: '18rem', height: '26rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
+            <Card className="mx-auto mb-4" style={{ width: '18rem', height: '26rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
               <Card.Img variant="top" src={Translation} className="img-fluid" />
               <Card.Body>
                 <Card.Title><u>Translation</u></Card.Title>
@@ -43,10 +44,19 @@ function Home() {
               </Card.Body>
             </Card>
           </div>
+          <div className="col">
+            <Card className="mx-auto mb-4" style={{ width: '18rem', height: '26rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
+              <Card.Img variant="top" src={PublicRelations} />
+              <Card.Body>
+                <Card.Title><u>Public relations</u></Card.Title>
+                <Card.Text>
+                  Some enlisted volunteers can help you improve your skills in communicating and interacting with others in the community.
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
         </div>
       </div>
-
-
 
       <p className='text-2xl text-opacity-25 mt-4' style={{ color: 'cyan' }}><i>~A voice for the voiceless~</i></p>
 
