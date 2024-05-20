@@ -92,12 +92,13 @@ const Account = () => {
                 </Form.Group>
                 <button className={cx('bg-green-600 hover:bg-green-500 text-cyan-300 hover:text-cyan-200 py-2 px-4 rounded', 'mb-3', 'mr-3')} onClick={handleUploadProfileImage}>Upload</button>
             </Card.Body>
-            <div className="card-footer">
-                <Link to="/edit-account" className="text-green-600 hover:text-green-500">Edit Account</Link>
-            </div>
+            {isLoggedIn && (
+                <div className="card-footer">
+                    <Link to="/edit-account" className="text-green-600 hover:text-green-500">Edit Account</Link>
+                </div>
+            )}
         </Card>
     );
 }
 
 export default Account;
-
