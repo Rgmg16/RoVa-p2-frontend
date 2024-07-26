@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react'; // Import useContext
 import cx from 'classnames';
 import { Form } from 'react-bootstrap';
-import useAuth from './Custom Hooks/Useauth';
+import { AuthContext } from '../context/AuthContext'; // Import AuthContext
 import { useForm, ValidationError } from '@formspree/react';
 
 function Challenges() {
-  const { isLoggedIn } = useAuth();
+  const { isAuthenticated } = useContext(AuthContext); // Use AuthContext to check authentication state
   const [state, handleSubmit] = useForm("xjvnllnn");
 
   return (
@@ -24,7 +24,7 @@ function Challenges() {
         <ValidationError prefix="Message" field="message" errors={state.errors} />
       </Form.Floating>
       <input type="hidden" name="_replyto" value="gumborobert7@gmail.com" />
-      {isLoggedIn ? (
+      {isAuthenticated ? ( // Updated to use isAuthenticated from AuthContext
         <button
           type="submit"
           className={cx(

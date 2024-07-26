@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form } from 'react-bootstrap';
 import cx from 'classnames';
-import useAuth from './Custom Hooks/Useauth';
+import { AuthContext } from '../context/AuthContext'; // Import AuthContext
 
 function Suggestions() {
-  const { isLoggedIn } = useAuth();
+  const { isAuthenticated } = useContext(AuthContext); // Use AuthContext to get authentication status
 
   return (
     <Form action="https://formspree.io/f/xbjnwwne" method="POST">
@@ -20,7 +20,7 @@ function Suggestions() {
         </label>
       </Form.Floating>
       <input type="hidden" name="_replyto" value="gumborobert7@gmail.com" />
-      {isLoggedIn ? (
+      {isAuthenticated ? ( // Check authentication status from AuthContext
         <button
           type="submit"
           className={cx(
@@ -37,3 +37,4 @@ function Suggestions() {
 }
 
 export default Suggestions;
+

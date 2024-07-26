@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import  useAuth  from './Custom Hooks/Useauth';
+import { AuthContext } from '../context/AuthContext'; 
 import Account from './Account';
 import Logout from './Logout';
 
 const DropDown = () => {
-    const { isLoggedIn } = useAuth(); // Assuming isLoggedIn is a state indicating whether the user is logged in
+    const { isAuthenticated } = useContext(AuthContext); 
 
     return (
         <Dropdown>
@@ -17,7 +17,7 @@ const DropDown = () => {
             <Dropdown.Menu>
                 <Dropdown.Item as={Link} to="/account">My Account</Dropdown.Item>
                 <Dropdown.Divider />
-                {isLoggedIn ? (
+                {isAuthenticated ? (
                     <Dropdown.Item as={Link} to="/logout" style={{ color: 'red' }}>Logout</Dropdown.Item>
                 ) : (
                     <>
@@ -31,4 +31,5 @@ const DropDown = () => {
 };
 
 export default DropDown;
+
 

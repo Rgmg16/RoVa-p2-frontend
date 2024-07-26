@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Card, Form } from 'react-bootstrap';
-import { storage } from './Firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Link } from 'react-router-dom';
-import cx from 'classnames'
-import useAuth from './Custom Hooks/Useauth';
+import axios from 'axios';
+import cx from 'classnames';
+import { AuthContext } from '../context/AuthContext';
 
 const Account = () => {
-    const { isLoggedIn } = useAuth();
+    const { isAuthenticated } = useContext(AuthContext); 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -15,18 +14,24 @@ const Account = () => {
     const [profileImage, setProfileImage] = useState(null);
 
     useEffect(() => {
-        if (isLoggedIn) {
-            // Fetch data from localStorage
-            const storedName = localStorage.getItem('name');
-            const storedEmail = localStorage.getItem('email');
-            const storedUsername = localStorage.getItem('username');
-            const storedProfileImageUrl = localStorage.getItem('profileImageUrl');
-            
-            // Update state with fetched data
-            setName(storedName || '');
-            setEmail(storedEmail || '');
-            setUsername(storedUsername || '');
-            setProfileImageUrl(storedProfileImageUrl || '');
+        if (isAuthenticated) {
+            // Fetch user data from backend using session authentication
+            const fetchUserData = async () => {
+                try {
+                    const response = await axios.get('http://localhost:8000/api/profile/', {
+                        withCredentials: true // Include cookies with the request
+                    });
+                    const { name, email, username, profile_image } = response.data;
+                    setName(name);
+                    setEmail(email);
+                    setUsername(username);
+                    setProfileImageUrl(profile_image || '');
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                }
+            };
+
+            fetchUserData();
         } else {
             // Set fields to default "Sign in/Log in first" if not authenticated
             setName('Sign in/Log in first');
@@ -34,7 +39,7 @@ const Account = () => {
             setUsername('Sign in/Log in first');
             setProfileImageUrl('');
         }
-    }, [isLoggedIn]);
+    }, [isAuthenticated]);
 
     const handleProfileImageChange = (event) => {
         const file = event.target.files[0];
@@ -48,30 +53,32 @@ const Account = () => {
                 return;
             }
 
-            // Create a storage reference to upload the file
-            const storageRef = ref(storage, `profileImages/${profileImage.name}`);
+            // Create a FormData object to send the file
+            const formData = new FormData();
+            formData.append('profile_image', profileImage);
 
-            // Upload the file to Firebase Storage
-            await uploadBytes(storageRef, profileImage);
+            // Upload the profile image to the backend using session authentication
+            await axios.patch('http://localhost:8000/api/profile/update/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                withCredentials: true // Include cookies with the request
+            });
 
-            // Get the download URL of the uploaded file
-            const downloadUrl = await getDownloadURL(storageRef);
-
-            // Update the profile image URL in the localStorage
-            localStorage.setItem('profileImageUrl', downloadUrl);
-
-            // Update the profileImageUrl state
-            setProfileImageUrl(downloadUrl);
+            // Fetch the updated user data
+            const response = await axios.get('http://localhost:8000/api/profile/', {
+                withCredentials: true // Include cookies with the request
+            });
+            setProfileImageUrl(response.data.profile_image || '');
 
             // Clear the profileImage state after successful upload
             setProfileImage(null);
 
-            console.log("Profile image uploaded successfully:", downloadUrl);
+            console.log("Profile image uploaded successfully");
         } catch (error) {
             console.error("Error uploading profile image:", error);
         }
     };
-
 
     return (
         <Card className="mx-auto mt-5" style={{ width: '18rem', height: '25rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
@@ -81,18 +88,22 @@ const Account = () => {
                 <p><strong>Username:</strong> {username}</p>
                 <p><strong>Email:</strong> {email}</p>
                 
-                {profileImageUrl && (
+                {isAuthenticated && profileImageUrl && (
                     <div>
                         <img src={profileImageUrl} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
                     </div>
                 )}
-                <Form.Group controlId="formProfileImage" className="mb-3">
-                    <Form.Label>Upload Profile Photo</Form.Label>
-                    <Form.Control type="file" onChange={handleProfileImageChange} />
-                </Form.Group>
-                <button className={cx('bg-green-600 hover:bg-green-500 text-cyan-300 hover:text-cyan-200 py-2 px-4 rounded', 'mb-3', 'mr-3')} onClick={handleUploadProfileImage}>Upload</button>
+                {isAuthenticated && (
+                    <>
+                        <Form.Group controlId="formProfileImage" className="mb-3">
+                            <Form.Label>Upload Profile Photo</Form.Label>
+                            <Form.Control type="file" onChange={handleProfileImageChange} />
+                        </Form.Group>
+                        <button className={cx('bg-green-600 hover:bg-green-500 text-cyan-300 hover:text-cyan-200 py-2 px-4 rounded', 'mb-3', 'mr-3')} onClick={handleUploadProfileImage}>Upload</button>
+                    </>
+                )}
             </Card.Body>
-            {isLoggedIn && (
+            {isAuthenticated && (
                 <div className="card-footer">
                     <Link to="/edit-account" className="text-green-600 hover:text-green-500">Edit Account</Link>
                 </div>
