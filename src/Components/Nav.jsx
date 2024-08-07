@@ -25,27 +25,76 @@ function Navi() {
 
     return (
         <div>
-            <Navbar className="bg-green-700" expand="lg" expanded={expanded}>
+
+            <Navbar style={{ backgroundColor: '#006600' }} expand="lg" expanded={expanded}>
                 <Container>
-                    <Navbar.Brand as={Link} to="/" onClick={handleNavClick}>
+                    <Navbar.Brand
+                        as={Link}
+                        to="/"
+                        onClick={handleNavClick}
+                        style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                        onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                        onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}
+                    >
                         RoVa
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbar-nav" onClick={() => setExpanded(!expanded)} />
                     <Navbar.Collapse id="navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/" onClick={handleNavClick}><u>Home</u></Nav.Link>
-                            <Nav.Link as={Link} to="/application" onClick={handleNavClick}><u>Application</u></Nav.Link>
-                            <Nav.Link as={Link} to="/volunteers" onClick={handleNavClick}><u>Volunteers</u></Nav.Link>
-                            <Nav.Link as={Link} to="/challenges" onClick={handleNavClick}><u>Challenges</u></Nav.Link>
-                            <Nav.Link as={Link} to="/community" onClick={handleNavClick}><u>Community</u></Nav.Link>
-                            <Nav.Link as={Link} to="/contact" onClick={handleNavClick}><u>Contact</u></Nav.Link>
-                            <Nav.Link as={Link} to="/news" onClick={handleNavClick}><u>News</u></Nav.Link>
-                            <Nav.Link as={Link} to="/suggestions" onClick={handleNavClick}><u>Suggestions</u></Nav.Link>
+                            <Nav.Link as={Link} to="/" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Home
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/application" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Application
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/volunteers" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Volunteers
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/challenges" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Challenges
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/community" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Community
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/contact" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Contact
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/news" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                News
+                            </Nav.Link>
+                            <Nav.Link as={Link} to="/suggestions" onClick={handleNavClick}
+                                style={{ color: '#F9FAFB', textDecoration: 'none' }}
+                                onMouseOver={(e) => e.currentTarget.style.color = '#93C6E5'}
+                                onMouseOut={(e) => e.currentTarget.style.color = '#F9FAFB'}>
+                                Suggestions
+                            </Nav.Link>
                         </Nav>
                         <Dropdown />
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+
 
             <Routes>
                 <Route path="/" element={<Home />} />

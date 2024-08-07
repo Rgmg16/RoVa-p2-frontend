@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Card, Form } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import cx from 'classnames';
 import { AuthContext } from '../context/AuthContext';
+import defaultProfileImage from './RoVa.png'; // Adjust the path accordingly
 
 const Account = () => {
-    const { isAuthenticated } = useContext(AuthContext); 
+    const { isAuthenticated, csrfToken } = useContext(AuthContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
-    const [profileImageUrl, setProfileImageUrl] = useState('');
-    const [profileImage, setProfileImage] = useState(null);
+    const [profileImageUrl, setProfileImageUrl] = useState(defaultProfileImage);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -19,13 +18,14 @@ const Account = () => {
             const fetchUserData = async () => {
                 try {
                     const response = await axios.get('http://localhost:8000/api/profile/', {
-                        withCredentials: true // Include cookies with the request
+                        withCredentials: true,
+                        headers: { 'X-CSRFToken': csrfToken }
                     });
                     const { name, email, username, profile_image } = response.data;
                     setName(name);
                     setEmail(email);
                     setUsername(username);
-                    setProfileImageUrl(profile_image || '');
+                    setProfileImageUrl(profile_image || defaultProfileImage);
                 } catch (error) {
                     console.error("Error fetching user data:", error);
                 }
@@ -37,78 +37,31 @@ const Account = () => {
             setName('Sign in/Log in first');
             setEmail('Sign in/Log in first');
             setUsername('Sign in/Log in first');
-            setProfileImageUrl('');
+            setProfileImageUrl(defaultProfileImage);
         }
-    }, [isAuthenticated]);
-
-    const handleProfileImageChange = (event) => {
-        const file = event.target.files[0];
-        setProfileImage(file);
-    };
-
-    const handleUploadProfileImage = async () => {
-        try {
-            if (!profileImage) {
-                console.error("No profile image selected");
-                return;
-            }
-
-            // Create a FormData object to send the file
-            const formData = new FormData();
-            formData.append('profile_image', profileImage);
-
-            // Upload the profile image to the backend using session authentication
-            await axios.patch('http://localhost:8000/api/profile/update/', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                },
-                withCredentials: true // Include cookies with the request
-            });
-
-            // Fetch the updated user data
-            const response = await axios.get('http://localhost:8000/api/profile/', {
-                withCredentials: true // Include cookies with the request
-            });
-            setProfileImageUrl(response.data.profile_image || '');
-
-            // Clear the profileImage state after successful upload
-            setProfileImage(null);
-
-            console.log("Profile image uploaded successfully");
-        } catch (error) {
-            console.error("Error uploading profile image:", error);
-        }
-    };
+    }, [isAuthenticated, csrfToken]);
 
     return (
-        <Card className="mx-auto mt-5" style={{ width: '18rem', height: '25rem', backgroundColor: 'cyan', color: 'green', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
-            <Card.Body>
-                <Card.Title><u>Account Information</u></Card.Title>
-                <p><strong>Name:</strong> {name}</p>
-                <p><strong>Username:</strong> {username}</p>
-                <p><strong>Email:</strong> {email}</p>
-                
-                {isAuthenticated && profileImageUrl && (
-                    <div>
+        <div className="d-flex justify-content-center mt-5">
+            <Card className="text-center" style={{ width: '18rem', height: 'auto', backgroundColor: 'green', color: 'white', boxShadow: '15px 15px 8px rgba(0, 0, 0, 0.3)' }}>
+                {isAuthenticated && (
+                    <div className="mt-3">
                         <img src={profileImageUrl} alt="Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
                     </div>
                 )}
+                <Card.Body>
+                    <Card.Title><i>~ Account Information ~</i></Card.Title>
+                    <p><strong>Name:</strong> {name}</p>
+                    <p><strong>Username:</strong> {username}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                </Card.Body>
                 {isAuthenticated && (
-                    <>
-                        <Form.Group controlId="formProfileImage" className="mb-3">
-                            <Form.Label>Upload Profile Photo</Form.Label>
-                            <Form.Control type="file" onChange={handleProfileImageChange} />
-                        </Form.Group>
-                        <button className={cx('bg-green-600 hover:bg-green-500 text-cyan-300 hover:text-cyan-200 py-2 px-4 rounded', 'mb-3', 'mr-3')} onClick={handleUploadProfileImage}>Upload</button>
-                    </>
+                    <div className="card-footer">
+                        <Link to="/edit-account" className="text-blue-300 hover:text-blue-200">Edit Account</Link>
+                    </div>
                 )}
-            </Card.Body>
-            {isAuthenticated && (
-                <div className="card-footer">
-                    <Link to="/edit-account" className="text-green-600 hover:text-green-500">Edit Account</Link>
-                </div>
-            )}
-        </Card>
+            </Card>
+        </div>
     );
 }
 

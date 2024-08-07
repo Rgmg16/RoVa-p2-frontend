@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
     const [csrfToken, setCsrfToken] = useState('');
 
     useEffect(() => {
-        // Fetch CSRF token when the component mounts
+
         const fetchCsrfToken = async () => {
             const response = await axios.get('http://localhost:8000/api/csrf/');
             setCsrfToken(response.data.csrfToken);
